@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Steganography Tool</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: url('https://t3.ftcdn.net/jpg/02/69/46/42/360_F_269464287_Q2DoeIRT847orJlYDSX59T8pjlF9nO94.jpg') no-repeat center center fixed;
+            background-size: cover;
+            color: white;
+            text-align: center;
+            padding-top: 50px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .container {
+            display: flex;
+            width: 100%;
+            padding: 0 5%;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .main-menu {
+            display: flex;
+            flex-direction: column;
+            height: 80vh;
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            margin-bottom: 10px;
+            color: #333;
+        }
+ 
+        .bottom {
+            display: flex;
+            height: 100%;
+            flex-direction: row;
+        }
+
+        .description {
+            height: 96%;
+            width: 40%;
+            padding: 20px;
+            box-sizing: border-box;
+            background: rgba(58, 69, 78, 0.7);
+            border-radius: 15px;
+            color: #fff;
+            margin-left: 60px; /* Add some space between description and buttons */
+        }
+       .description-box h3 {
+            margin: 0 0 10px 0; /* Adjust margin as needed */
+            text-align: center; /* Center the heading */
+        }
+       .description-box {
+            width: 400px; /* Adjust width as needed */
+            padding: 12px;
+            border: 1px solid #ccc; /* Optional: border for visibility */
+            background-color: #1e3d59; /* Set background color */
+            color: #ffffff; /* Set text color */
+            border-radius: 15px; /* Optional: rounded corners */
+            margin-inline: 2%;
+            margin-top: 3%;
+        }
+        .description-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .description-item {
+            display: flex;
+            align-items: baseline;
+        }
+        .bullet {
+            min-width: 20px; /* Width for the bullets */
+        }
+        .text {
+            flex: 1;
+        }
+        .type-buttons  {
+            width: 50%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            margin-left: 80px;
+        }
+        .card {
+            background: rgba(76, 122, 162, 0.7);
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 12px 24px rgba(76, 122, 162, 0.7);
+            color: #fff;
+            transition: transform 0.4s, opacity 0.4s;
+            opacity: 0;
+            transform: translateY(50px);
+            padding: 20px;
+            margin-bottom: 20px;
+            position: relative;
+            overflow: hidden;
+            width: 80%;
+        }
+       .cards {
+            display: flex;
+            flex-direction: column; /* Arrange child elements vertically */
+            justify-content: center; /* Center children vertically */
+            align-items: center; /* Center children horizontally */
+            height: 100%;
+            width: 100%;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        /* Styling for the description area */
+        .cards > div:first-child {
+            width: 100%;
+            text-align: center;
+            padding: 20px;
+            /*background: rgba(0, 0, 0, 0.6);  Semi-transparent background */
+            color: #fff;
+            margin-bottom: 20px; /* Space between description and form */
+            border-radius: 20px; /* Optional: Rounded corners */
+        }
+        /* Styling for the section card */
+        .section-card {
+            background: rgba(76, 122, 162, 0.7);
+            border-radius: 50px;
+            box-shadow: 0 12px 24px rgba(76, 122, 162, 0.7);
+            color: #fff;
+            padding: 20px;
+            width: 100%;
+            max-width: 600px; /* Adjust as needed */
+            margin: 0 auto;
+            position: relative;
+            border-radius: 10px;
+        }   
+        .card h2, .section-card h2 {
+            font-weight: 700;  
+        }
+        .btn {
+            border-radius: 25px;
+            padding: 10px 20px;
+            font-size: 1.2em;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            display: inline-block;
+            text-transform: uppercase;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #1e90ff, #00bfff);
+            border: none;
+            color: white;
+        }
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #00bfff, #1e90ff);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+            transform: scale(1.1);
+        }
+        .btn-secondary {
+            background: #6c757d;
+            border: none;
+            color: white;
+        }
+        .btn-secondary:hover {
+            background: #5a6268;
+            transform: scale(1.1);
+        }
+        .btn-danger {
+            background: #dc3545;
+            border: none;
+            color: white;
+        }
+        .btn-danger:hover {
+            background: #c82333;
+            transform: scale(1.1);
+        }
+        .card::before, .section-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.3);
+            z-index: 0;
+            transition: opacity 0.3s;
+            border-radius: 20px;
+        }
+        .card:hover::before, .section-card:hover::before {
+            opacity: 0.6;
+        }
+        .card-content, .section-card-content {
+            position: relative;
+            z-index: 1;
+            border-radius: inherit;
+        }
+        .hidden {
+            display: none;
+        }
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .animate-slideIn {
+            animation: slideIn 0.5s forwards;
+        }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+        .animate-fadeIn {
+            animation: fadeIn 0.5s forwards;
+       
+        .bottom .description, .bottom .type-buttons {
+            width: 50%;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        }
+        .section-card-content {
+            border-radius: inherit; /* Ensure child elements inherit the parent's border radius */
+        }
+        p{
+            color:  #333;
+            font-size: 20px;
+            font-weight: bold;
+        }
+        header{
+            color:#de162a;
+        }
+        .form-container {
+            display: flex; /* Use flexbox for alignment */
+            flex-direction: column; /* Arrange children in a column */
+            align-items: center; /* Center align children horizontally */
+            justify-content: flex-end; /* Center align children vertically */
+            width: 100%; /* Full width of the parent container */
+            border-radius: 20px;
+        }
+        .form-control {
+            width: 80%; /* Set a relative width */
+            max-width: 400px; /* Limit the maximum width */
+            padding: 10px; /* Add padding for better appearance */
+            border-radius: 5px; /* Rounded corners */
+            border: 1px solid #ddd; /* Light border color */
+            background-color: #fff; /* White background */
+            color: #333; /* Dark text color */
+            font-size: 1em; /* Standard font size */
+            margin-bottom: 15px; /* Space between fields */
+            box-sizing: border-box;   
+        }
+        /* Styling for file input */
+        #encode-file {
+            max-width: 400px; /* Limit maximum width */
+            padding: 10px; /* Padding inside the file input */
+            margin-inline: 80px;
+        }
+        /* Styling for text input */
+        #encoded-message {
+            max-width: 400px; /* Limit maximum width */
+            padding: 10px; /* Padding inside the text input */
+            margin-inline: 80px;
+            font-size: 16px;
+        }
+        #decode-file {
+            max-width: 400px; /* Limit maximum width */
+            padding: 10px; /* Padding inside the file input */
+            margin-inline: 80px;
+        }
+        #passkey-field .form-control {
+        margin-inline: 80px; /* Same margin as the file input */
+        max-width: 400px; /* Ensure the same maximum width */
+        padding: 10px; /* Same padding as the file input */
+        }
+        .large-input {
+        width: 100%; /* Adjust width as needed */
+        height: 100px; /* Adjust height as needed */
+        font-size: 1.5em; /* Adjust font size for better readability */
+        padding: 10px; /* Add padding for better text appearance */
+        border-radius: 10px; /* Make corners round */
+        border: 1px solid #ccc; /* Add a border */
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add shadow for depth */
+        resize: horizontal; /* Allow vertical resizing only */
+        }
+       
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="main-menu" id="main-menu">
+            <div class="header">
+                <h1>Steganography Tool</h1>
+            </div>
+            <div class="bottom">
+                <div class="description">
+                    <div class="description-box" id="description-box">
+                    <h3>DESCRIPTION:</h3>
+                    <div class="description-text">
+                        <div class="description-item">
+                            <div class="bullet">**</div>
+                            <div class="text">Steganography is like sending a hidden message in a way that only the intended receiver knows it's there.</div>
+                        </div>
+                        <div class="description-item">
+                            <div class="bullet">**</div>
+                            <div class="text">There are several types of steganography, such as text, image, audio and video steganography.</div>
+                        </div>
+                        <div class="description-item">
+                            <div class="bullet">**</div>
+                            <div class="text"> Each type utilizes different mediums to conceal 
+                                information, making it a versatile and covert method 
+                                of communication.</div>
+                        </div>
+                        <div class="description-item">
+                            <div class="bullet">**</div>
+                            <div class="text">The tool can hide a text message inside any type which would be imperceptible to the naked eye but detectable by someone who knows how to look for it.</div>
+                        </div>
+                        <div class="description-item">
+                            <div class="bullet">**</div>
+                            <div class="text">The goal is to keep the existence of the hidden information unknown to anyone who isn't aware it's there.</div>
+                        </div>
+                        <div class="description-item">
+                            <div class="bullet">**</div>
+                            <div class="text">This makes steganography a powerful tool for secure and private communication.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+                <div class="type-buttons">
+                    <div class="card p-3 animate-slideIn">
+                        <div class="card-content">
+                            <h2>Image Steganography</h2>
+                            <button class="btn btn-primary" onclick="navigateToForm('encode', 'image')">Encode</button>
+                            <button class="btn btn-secondary" onclick="navigateToForm('decode', 'image')">Decode</button>
+                        </div>
+                    </div>
+                    <div class="card p-3 animate-slideIn">
+                        <div class="card-content">
+                           <h2>Video Steganography</h2>
+                          <button class="btn btn-primary" onclick="navigateToForm('encode', 'video')">Encode</button>
+                          <button class="btn btn-secondary" onclick="navigateToForm('decode', 'video')">Decode</button>
+                        </div>
+                    </div>
+                    <div class="card p-3 animate-slideIn">
+                        <div class="card-content">
+                              <h2>Audio Steganography</h2>
+                           <button class="btn btn-primary" onclick="navigateToForm('encode', 'audio')">Encode</button>
+                            <button class="btn btn-secondary" onclick="navigateToForm('decode', 'audio')">Decode</button>
+                        </div>
+                    </div>
+                    <div class="card p-3 animate-slideIn">
+                        <div class="card-content">
+                          <h2>Text Steganography</h2>
+                           <button class="btn btn-primary" onclick="navigateToForm('encode', 'text')">Encode</button>
+                           <button class="btn btn-secondary" onclick="navigateToForm('decode', 'text')">Decode</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="cards hidden" id="encode-form">
+            <div>
+            <p>!..Choose the file which you want to keep secret and enter secret message then click on Encode button..!</p>
+            </div>
+            <div class="section-card p-3 animate-fadeIn">
+                
+                <div class="section-card-content">
+                    <h2 id="encode-title">Encode</h2>
+                    <form id="encode-form-element" action="/encode" method="post" enctype="multipart/form-data">
+                        <input type="hidden" name="type" id="encode-steganography-type">
+                        <input type="file" name="file" class="form-control mb-3" id="encode-file" required>
+                        <textarea type="text" name="message" class="form-control mb-3 large-input" placeholder="Enter your message" id="encoded-message" required></textarea>
+                        <button type="submit" class="btn btn-primary">Encode</button>
+                    </form>
+                    <button class="btn btn-secondary mt-3" onclick="backToMenu()">Back</button>
+                </div>
+            </div>
+        </div>
+        <div class="cards hidden" id="decode-form">
+            <div>
+                <p>!..Choose the file which you want to know the secret then click on Decode button..!</p></div>
+            <div class="section-card p-3 animate-fadeIn">
+                <div class="section-card-content">
+                    <h2 id="decode-title">Decode</h2>
+                    <form id="decode-form-element" action="/decode" method="post" enctype="multipart/form-data">
+                        <input type="hidden" name="type" id="decode-steganography-type" onchange="togglePassKeyField()">
+                        <input type="file" name="file" class="form-control mb-3" id="decode-file" required>
+                        <div id="passkey-field" class="mb-3" >
+                            <input type="number" name="pass_key" class="form-control mb-3" placeholder="Enter Pass Key" autocomplete="off">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Decode</button>
+                    </form>
+                    <button class="btn btn-secondary mt-3" onclick="backToMenu()">Back</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        function navigateToForm(action, type) {
+            document.getElementById('main-menu').classList.add('hidden');
+            if (action === 'encode') {
+                document.getElementById('encode-form').classList.remove('hidden');
+                document.getElementById('encode-steganography-type').value = type;
+                document.getElementById('encode-title').innerText = 'Encode ' + type.charAt(0).toUpperCase() + type.slice(1) + ' Steganography';
+                setFileInputAccept(type, 'encode');
+            } else if (action === 'decode') {
+                document.getElementById('decode-form').classList.remove('hidden');
+                document.getElementById('decode-steganography-type').value = type;
+                document.getElementById('decode-title').innerText = 'Decode ' + type.charAt(0).toUpperCase() + type.slice(1) + ' Steganography';
+                setFileInputAccept(type, 'decode');
+                togglePassKeyField(type);
+            }
+        }
+
+        function setFileInputAccept(type, formType) {
+            const fileInput = document.getElementById(`${formType}-file`);
+            let extensions = '';
+
+            switch (type) {
+                case 'image':
+                    extensions = 'image/*';
+                    break;
+                case 'video':
+                    extensions = 'video/*';
+                    break;
+                case 'audio':
+                    extensions = 'audio/*';
+                    break;
+                case 'text':
+                    extensions = '.txt';
+                    break;
+                default:
+                    extensions = '*/*';
+            }
+
+            fileInput.setAttribute('accept', extensions);
+        }
+
+        function backToMenu() {
+            document.getElementById('encode-form').classList.add('hidden');
+            document.getElementById('decode-form').classList.add('hidden');
+            document.getElementById('main-menu').classList.remove('hidden');
+            clearForm('encode-form-element');
+            clearForm('decode-form-element');
+        }
+        function clearForm(formId) {
+            document.getElementById(formId).reset();
+        }
+        // Function to show/hide the pass key field based on the steganography type
+        function togglePassKeyField(type) {
+            const passKeyField = document.getElementById('passkey-field');
+            const passKeyInput = passKeyField.querySelector('input[name="pass_key"]');
+            if (type === 'video') {
+                passKeyField.style.display = 'block';
+                passKeyInput.setAttribute('required', 'required');
+            } else {
+                passKeyField.style.display = 'none';
+                passKeyInput.removeAttribute('required');
+            }
+        }
+
+    </script>
+</body>
+</html>
+
+            

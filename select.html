@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Select Steganography Type</title>
+</head>
+<body>
+    <h1>Steganography Type: {{ steganography_type }}</h1>
+    <form action="{{ url_for('encode') }}" method="post" enctype="multipart/form-data">
+        <input type="hidden" name="type" value="{{ steganography_type }}">
+        <label for="file">Select file:</label>
+        <input type="file" name="file" id="file"><br>
+        <label for="message">Message:</label>
+        <textarea name="message" id="message" rows="4" cols="50"></textarea><br>
+        <label for="save-path">Save Path:</label>
+        <input type="text" name="save_path" id="save-path" placeholder="Enter path to save encoded file"><br>
+        <button type="submit">Encode</button>
+    </form>
+    <form action="{{ url_for('decode') }}" method="post" enctype="multipart/form-data" id="decode-form">
+        <input type="hidden" name="type" value="{{ steganography_type }}" id="decode-steganography-type">
+        <label for="decode-file">Select file:</label>
+        <input type="file" name="file" id="decode-file"><br>
+        <button type="submit">Decode</button>
+    </form>    
+    <a href="{{ url_for('index') }}">Back</a>
+</body>
+</html>
